@@ -1,67 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎙️ Un mensaje para ti</title>
+  <meta charset="UTF-8">
+  <title>Reproducir Audio</title>
   <style>
-body {
-  margin: 0;
-  padding: 0;
-  background: #fff8f0 url('juntos.jpg') no-repeat center center;
-  background-size: cover;
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  color: #4b2e2e;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 100vh;
-  backdrop-filter: brightness(0.9);
-}
-
-
-    .container {
-      background: rgba(255, 255, 255, 0.8);
-      padding: 30px;
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+      padding: 40px;
+    }
+    img {
+      width: 200px;
       border-radius: 20px;
-      margin: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      font-size: 28px;
       margin-bottom: 20px;
-      color: #e06c75;
     }
-
-    p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
-
     audio {
       width: 100%;
       max-width: 400px;
-      outline: none;
+      margin: 20px auto;
+      display: block;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>❤️ Mi Voz, Solo para Ti ❤️</h1>
-    <p>Cierra los ojos, escucha esto... viene directo de mi corazón 💌</p>
-    <audio id="audioPlayer" controls></audio>
-  </div>
+  <img src="juntos.jpg" alt="Foto especial">
+  <h1>Este audio es para ti ❤️</h1>
+  <audio id="audioPlayer" controls autoplay></audio>
 
   <script>
+    // Obtener el ID del audio desde la URL
     const params = new URLSearchParams(window.location.search);
-    const audioUrl = params.get("url");
+    const audioId = params.get('audio');
 
-    if (audioUrl) {
-      document.getElementById("audioPlayer").src = audioUrl;
+    if (audioId) {
+      const cloudName = 'dhshscbvx'; // Tu Cloudinary Cloud Name
+      const audioUrl = `https://res.cloudinary.com/${cloudName}/video/upload/${audioId}.webm`;
+      document.getElementById('audioPlayer').src = audioUrl;
     } else {
-      document.querySelector(".container").innerHTML = "<p style='color:red;'>No se encontró el audio.</p>";
+      document.body.innerHTML = "<h2>Error: No se encontró el audio.</h2>";
     }
   </script>
 </body>
