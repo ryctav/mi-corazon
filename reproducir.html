@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reproducción</title>
+  <meta charset="UTF-8">
+  <title>Reproducir Audio</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: #fff8f0 url('TU_IMAGEN_URL') no-repeat center center;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       text-align: center;
+      background: #FFE4EC;
+      padding: 40px;
+    }
+    img {
+      width: 200px;
+      border-radius: 20px;
+      margin-bottom: 20px;
     }
     audio {
-      width: 90%;
+      width: 100%;
       max-width: 400px;
-      margin-top: 20px;
+      margin: 20px auto;
+      display: block;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>🎧 Desde mi corazón 🎧</h1>
-  <audio id="player" controls></audio>
+  <img src="juntos.jpg" alt="Foto especial">
+  <h1>Este audio es para ti mi niña hermosa❤️</h1>
+  <audio id="audioPlayer" controls autoplay></audio>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const audioId = urlParams.get('audio');
+    const params = new URLSearchParams(window.location.search);
+    const audioId = params.get('audio');
 
     if (audioId) {
-      const cloudName = 'dhshscbvx'; // Tu cloud name
+      const cloudName = 'dhshscbvx';
       const audioUrl = `https://res.cloudinary.com/${cloudName}/video/upload/${audioId}.webm`;
-
-      const player = document.getElementById('player');
-      player.src = audioUrl;
+      document.getElementById('audioPlayer').src = audioUrl;
     } else {
-      document.body.innerHTML = '<p>No se encontró el audio.</p>';
+      document.body.innerHTML = "<h2>Error: No se encontró el audio.</h2>";
     }
   </script>
+
+  <h1>Te amo mi yare hermosa❤️</h1>
 </body>
 </html>
