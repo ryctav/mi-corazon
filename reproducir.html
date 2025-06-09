@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎙️ Un mensaje para ti</title>
+  <style>
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff8f0 url('juntos.jpg') no-repeat center center;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  color: #4b2e2e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  backdrop-filter: brightness(0.9);
+}
+
+
+    .container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 20px;
+      margin: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #e06c75;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 400px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>❤️ Mi Voz, Solo para Ti ❤️</h1>
+    <p>Cierra los ojos, escucha esto... viene directo de mi corazón 💌</p>
+    <audio id="audioPlayer" controls></audio>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const audioUrl = params.get("url");
+
+    if (audioUrl) {
+      document.getElementById("audioPlayer").src = audioUrl;
+    } else {
+      document.querySelector(".container").innerHTML = "<p style='color:red;'>No se encontró el audio.</p>";
+    }
+  </script>
+</body>
+</html>
