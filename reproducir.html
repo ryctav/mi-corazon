@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Reproducir Audio</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       background: #F8BBD0;
-      padding: 40px;
+      padding: 20px;
+      margin: 0;
     }
     img {
-      width: 200px;
+      width: 80vw;       /* Que la imagen ocupe 80% del ancho de pantalla */
+      max-width: 300px;  /* Pero no más de 300px */
       border-radius: 20px;
       margin-bottom: 20px;
+      height: auto;
     }
     audio {
-      width: 100%;
-      max-width: 400px;
+      width: 90vw;       /* Que el audio ocupe 90% del ancho en móviles */
+      max-width: 400px;  /* Pero no más de 400px */
       margin: 20px auto;
       display: block;
+      height: 40px;      /* Tamaño mayor para que se vea cómodo */
     }
     h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      font-size: 5vw;    /* Texto que escala con el ancho */
+      max-font-size: 24px;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
+    /* En pantallas grandes ajustar tamaño */
+    @media (min-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+      audio {
+        height: 30px;
+      }
     }
   </style>
 </head>
 <body>
-  <img src="juntos.jpg" alt="Foto especial">
+  <img src="juntos.jpg" alt="Foto especial" />
   <h1>Este audio es para ti mi niña hermosa❤️</h1>
   <audio id="audioPlayer" controls autoplay></audio>
 
   <script>
-    // Obtener el ID del audio desde la URL
     const params = new URLSearchParams(window.location.search);
     const audioId = params.get('audio');
 
     if (audioId) {
-      const cloudName = 'dhshscbvx'; // Tu Cloudinary Cloud Name
+      const cloudName = 'dhshscbvx';
       const audioUrl = `https://res.cloudinary.com/${cloudName}/video/upload/${audioId}.webm`;
       document.getElementById('audioPlayer').src = audioUrl;
     } else {
