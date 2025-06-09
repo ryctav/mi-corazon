@@ -1,6 +1,6 @@
 // --- CONFIGURACIÓN ---
-const CLOUDINARY_CLOUD_NAME = 'dhshscbvx'; // <-- Tu Cloudinary Cloud Name
-const CLOUDINARY_UPLOAD_PRESET = 'grabaciones qr'; // <-- Tu Upload Preset
+const CLOUDINARY_CLOUD_NAME = 'dhshscbvx';
+const CLOUDINARY_UPLOAD_PRESET = 'grabaciones qr';
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
 
 // --- Elementos del DOM ---
@@ -34,8 +34,8 @@ navigator.mediaDevices.getUserMedia({ audio: true })
             confirmButton.style.display = 'inline-block';
             statusText.textContent = 'Audio grabado. Escúchalo y confirma.';
         };
-
-    }).catch(err => {
+    })
+    .catch(err => {
         console.error("Error al acceder al micrófono:", err);
         statusText.textContent = "Error: No se pudo acceder al micrófono.";
     });
@@ -55,12 +55,11 @@ recordButton.addEventListener('click', () => {
 
 stopButton.addEventListener('click', () => {
     mediaRecorder.stop();
-
     recordButton.disabled = false;
     stopButton.disabled = true;
 });
 
-// --- Lógica de Confirmación y Subida ---
+// --- Confirmar y subir ---
 confirmButton.addEventListener('click', () => {
     statusText.textContent = 'Subiendo audio a la nube...';
     confirmButton.disabled = true;
@@ -77,15 +76,14 @@ confirmButton.addEventListener('click', () => {
     .then(data => {
         if (data.secure_url && data.public_id) {
             statusText.textContent = '¡Listo! Escanea tu código QR.';
+
+            const customUrl = `https://ryctav.github.io/mi-corazon/reproducir.html?audio=${data.public_id}`;
+            generateQRCode(customUrl);
+
             audioPlayback.style.display = 'none';
             confirmButton.style.display = 'none';
-
-            // Generar URL personalizada para tu página
-            const publicId = data.public_id;
-            const customUrl = `https://ryctav.github.io/mi-corazon/reproducir.html?audio=${publicId}`;
-            generateQRCode(customUrl);
         } else {
-            throw new Error('No se recibió la URL pública desde Cloudinary.');
+            throw new Error('No se recibió una URL válida desde Cloudinary.');
         }
     })
     .catch(error => {
@@ -95,16 +93,16 @@ confirmButton.addEventListener('click', () => {
     });
 });
 
-// --- Lógica de Generación de QR ---
-function generateQRCode(url) {
-    qrContainer.innerHTML = '';
+// --- Generar QR ---
+function generateQRCode(audioUrl) {
+    qrContainer.innerHTML = ''; 
 
     new QRCode(qrContainer, {
-        text: url,
+        text: audioUrl,
         width: 200,
         height: 200,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.H
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
     });
 }
