@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Reproducir Audio</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background: #FFE4EC;
+      background: #F8BBD0;
       padding: 40px;
     }
     img {
@@ -33,18 +34,18 @@
   <audio id="audioPlayer" controls autoplay></audio>
 
   <script>
+    // Obtener el ID del audio desde la URL
     const params = new URLSearchParams(window.location.search);
     const audioId = params.get('audio');
 
     if (audioId) {
-      const cloudName = 'dhshscbvx';
+      const cloudName = 'dhshscbvx'; // Tu Cloudinary Cloud Name
       const audioUrl = `https://res.cloudinary.com/${cloudName}/video/upload/${audioId}.webm`;
       document.getElementById('audioPlayer').src = audioUrl;
     } else {
       document.body.innerHTML = "<h2>Error: No se encontró el audio.</h2>";
     }
   </script>
-
   <h1>Te amo mi yare hermosa❤️</h1>
 </body>
 </html>
