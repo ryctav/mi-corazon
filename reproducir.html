@@ -1,50 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Reproducir Audio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reproducción</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff8f0 url('TU_IMAGEN_URL') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+      font-family: sans-serif;
       text-align: center;
-      background: #F8BBD0;
-      padding: 40px;
-    }
-    img {
-      width: 200px;
-      border-radius: 20px;
-      margin-bottom: 20px;
     }
     audio {
-      width: 100%;
+      width: 90%;
       max-width: 400px;
-      margin: 20px auto;
-      display: block;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <img src="juntos.jpg" alt="Foto especial">
-  <h1>Este audio es para ti mi niña hermosa❤️</h1>
-  <audio id="audioPlayer" controls autoplay></audio>
+  <h1>🎧 Desde mi corazón 🎧</h1>
+  <audio id="player" controls></audio>
 
   <script>
-    // Obtener el ID del audio desde la URL
-    const params = new URLSearchParams(window.location.search);
-    const audioId = params.get('audio');
+    const urlParams = new URLSearchParams(window.location.search);
+    const audioId = urlParams.get('audio');
 
     if (audioId) {
-      const cloudName = 'dhshscbvx'; // Tu Cloudinary Cloud Name
+      const cloudName = 'dhshscbvx'; // Tu cloud name
       const audioUrl = `https://res.cloudinary.com/${cloudName}/video/upload/${audioId}.webm`;
-      document.getElementById('audioPlayer').src = audioUrl;
+
+      const player = document.getElementById('player');
+      player.src = audioUrl;
     } else {
-      document.body.innerHTML = "<h2>Error: No se encontró el audio.</h2>";
+      document.body.innerHTML = '<p>No se encontró el audio.</p>';
     }
   </script>
-  <h1>Te amo mi yare hermosa❤️</h1>
 </body>
 </html>
