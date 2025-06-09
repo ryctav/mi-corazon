@@ -1,8 +1,7 @@
 // --- CONFIGURACIÓN ---
-const CLOUDINARY_CLOUD_NAME = 'dhshscbvx';
-const CLOUDINARY_UPLOAD_PRESET = 'grabaciones qr';
+const CLOUDINARY_CLOUD_NAME = 'dhshscbvx'; // <-- Tu Cloudinary Cloud Name
+const CLOUDINARY_UPLOAD_PRESET = 'grabaciones qr'; // <-- Tu Upload Preset
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
-const BASE_URL = 'https://ryctav.github.io/mi-corazon'; // <-- Tu dominio personalizado
 
 // --- Elementos del DOM ---
 const recordButton = document.getElementById('recordButton');
@@ -29,6 +28,7 @@ navigator.mediaDevices.getUserMedia({ audio: true })
         mediaRecorder.onstop = () => {
             audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
             const audioUrl = URL.createObjectURL(audioBlob);
+
             audioPlayback.src = audioUrl;
             audioPlayback.style.display = 'block';
             confirmButton.style.display = 'inline-block';
@@ -47,7 +47,7 @@ recordButton.addEventListener('click', () => {
     confirmButton.style.display = 'none';
 
     mediaRecorder.start();
-    
+
     recordButton.disabled = true;
     stopButton.disabled = false;
     statusText.textContent = 'Grabando... Habla ahora.';
@@ -55,11 +55,12 @@ recordButton.addEventListener('click', () => {
 
 stopButton.addEventListener('click', () => {
     mediaRecorder.stop();
+
     recordButton.disabled = false;
     stopButton.disabled = true;
 });
 
-// --- Confirmación y subida a Cloudinary ---
+// --- Lógica de Confirmación y Subida ---
 confirmButton.addEventListener('click', () => {
     statusText.textContent = 'Subiendo audio a la nube...';
     confirmButton.disabled = true;
@@ -74,16 +75,17 @@ confirmButton.addEventListener('click', () => {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.secure_url) {
-            const publicId = getPublicIdFromUrl(data.secure_url);
-            const customUrl = `${BASE_URL}/escuchar.html?audio=${publicId}`;
-
+        if (data.secure_url && data.public_id) {
             statusText.textContent = '¡Listo! Escanea tu código QR.';
             audioPlayback.style.display = 'none';
             confirmButton.style.display = 'none';
+
+            // Generar URL personalizada para tu página
+            const publicId = data.public_id;
+            const customUrl = `https://ryctav.github.io/mi-corazon/reproducir.html?audio=${publicId}`;
             generateQRCode(customUrl);
         } else {
-            throw new Error('La URL segura no se recibió de Cloudinary.');
+            throw new Error('No se recibió la URL pública desde Cloudinary.');
         }
     })
     .catch(error => {
@@ -93,22 +95,16 @@ confirmButton.addEventListener('click', () => {
     });
 });
 
-// --- Generar código QR ---
+// --- Lógica de Generación de QR ---
 function generateQRCode(url) {
-    qrContainer.innerHTML = ''; 
+    qrContainer.innerHTML = '';
+
     new QRCode(qrContainer, {
-        text: url, 
+        text: url,
         width: 200,
         height: 200,
         colorDark : "#000000",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.H
     });
-}
-
-// --- Extra: extraer public_id sin extensión ---
-function getPublicIdFromUrl(url) {
-    const parts = url.split('/');
-    const filename = parts[parts.length - 1];
-    return filename.split('.')[0];
 }
