@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Voz que sale de mi Corazón</title>
+    <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #fff8f0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      background-color: #e06c75;
+      color: white;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #ccc;
+    }
+    audio {
+      margin-top: 20px;
+      width: 100%;
+    }
+    #qr-container {
+     margin-top: 1.5rem; min-height: 200px; display: flex; justify-content: center; align-items: center;  
+    }
+    
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>❤️Desde mi corazón❤️</h1>
+        <p id="status">Presiona "Grabar" para empezar</p>
+        
+        <div class="botones">
+            <button id="recordButton">Grabar Audio</button>
+            <button id="stopButton" disabled>Detener Grabación</button>
+        </div>
+
+        <audio id="audioPlayback" controls style="display:none;"></audio>
+        
+        <div class="botones">
+            <button id="confirmButton" style="display:none;">Confirmar y Generar QR</button>
+        </div>
+
+        <div id="qrContainer"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
